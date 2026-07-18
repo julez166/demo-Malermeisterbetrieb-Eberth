@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Malermeisterbetrieb Eberth — Farbe, Präzision, Handwerk</title>
+<meta name="description" content="Malermeisterbetrieb Eberth: Innenanstrich, Fassaden, Tapezier- und Lackierarbeiten aus Meisterhand. Kostenlose Beratung vor Ort.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:wght@500;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+
+  /* ---------- Design tokens ---------- */
+  :root{
+    --paper:      #efece3;   /* Wandweiß */
+    --paper-alt:  #e4dfd0;   /* leicht getönt, für Sektions-Wechsel */
+    --ink:        #262523;   /* Anthrazit */
+    --ink-soft:   #57534a;
+    --line:       rgba(38,37,35,0.14);
+    --teal:       #2c5f5a;   /* Malerblau — Primärfarbe */
+    --teal-deep:  #1d403c;
+    --ochre:      #c98a3b;   /* warmer Farbfächer-Ton */
+    --oxide:      #a64b3f;   /* Signalfarbe, sparsam eingesetzt */
+    --paper-on-dark: #f3efe4;
+
+    --display: "Big Shoulders", sans-serif;
+    --body:    "Inter", sans-serif;
+    --mono:    "JetBrains Mono", monospace;
+
+    --wrap: 1180px;
+    --radius: 3px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family:var(--display);
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    margin:0;
+    line-height:0.95;
+  }
+
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{
+    max-width:var(--wrap);
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--teal-deep);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:2px;
+    background:var(--ochre);
+    display:inline-block;
+  }
+
+  :focus-visible{
+    outline:3px solid var(--oxide);
+    outline-offset:2px;
+  }
+
+  /* ---------- Header ---------- */
+  .site-header{
+    position:sticky;
+    top:0;
+    z-index:40;
+    background:rgba(239,236,227,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .site-header .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:78px;
+  }
+  .logo{
+    font-family:var(--display);
+    font-weight:900;
+    font-size:26px;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+    text-decoration:none;
+    color:var(--ink);
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  .logo span{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:0.1em;
+    color:var(--teal);
+    text-transform:none;
+  }
+
+  .main-nav{
+    display:flex;
+    align-items:center;
+    gap:34px;
+  }
+  .main-nav ul{
+    list-style:none;
+    display:flex;
+    gap:28px;
+    margin:0;
+    padding:0;
+  }
+  .main-nav a{
+    text-decoration:none;
+    font-size:14.5px;
+    font-weight:500;
+    color:var(--ink-soft);
+    position:relative;
+    padding:4px 0;
+  }
+  .main-nav a::after{
+    content:"";
+    position:absolute;
+    left:0; bottom:0;
+    height:2px; width:0;
+    background:var(--oxide);
+    transition:width 0.2s ease;
+  }
+  .main-nav a:hover::after,
+  .main-nav a:focus-visible::after{ width:100%; }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--body);
+    font-weight:600;
+    font-size:14.5px;
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:var(--radius);
+    border:1.5px solid transparent;
+    cursor:pointer;
+    transition:transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+  .btn-primary{
+    background:var(--oxide);
+    color:var(--paper-on-dark);
+  }
+  .btn-primary:hover{ background:var(--teal-deep); }
+  .btn-ghost{
+    border-color:var(--ink);
+    color:var(--ink);
+  }
+  .btn-ghost:hover{ background:var(--ink); color:var(--paper); }
+
+  .nav-toggle{
+    display:none;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:8px;
+  }
+  .nav-toggle span, .nav-toggle::before, .nav-toggle::after{
+    content:"";
+    display:block;
+    width:26px; height:2px;
+    background:var(--ink);
+    margin:5px 0;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:96px 0 70px;
+    background:var(--paper);
+  }
+  .hero-stroke{
+    position:absolute;
+    top:-40px; right:-120px;
+    width:640px;
+    height:auto;
+    opacity:0.9;
+    z-index:0;
+  }
+  .hero-stroke path{
+    stroke:var(--teal);
+    stroke-width:3;
+    fill:none;
+    stroke-dasharray:1400;
+    stroke-dashoffset:1400;
+    animation:draw 2.4s ease forwards 0.2s;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+
+  .hero .wrap{ position:relative; z-index:1; }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.3fr 0.9fr;
+    gap:48px;
+    align-items:end;
+  }
+  .hero h1{
+    font-size:clamp(46px, 6.6vw, 92px);
+    max-width:14ch;
+    margin-top:18px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--teal);
+  }
+  .hero-lede{
+    margin:26px 0 34px;
+    max-width:46ch;
+    font-size:18px;
+    color:var(--ink-soft);
+  }
+  .hero-cta{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+
+  .hero-meta{
+    border-left:2px solid var(--line);
+    padding-left:28px;
+    display:grid;
+    gap:22px;
+  }
+  .hero-meta .stat{
+    display:flex;
+    flex-direction:column;
+  }
+  .hero-meta .num{
+    font-family:var(--display);
+    font-weight:900;
+    font-size:40px;
+    color:var(--teal-deep);
+  }
+  .hero-meta .label{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+  }
+
+  /* ---------- Farbfächer / Leistungen ---------- */
+  .swatches{
+    padding:80px 0 90px;
+    background:var(--paper-alt);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    margin-bottom:44px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{ font-size:clamp(30px, 3.6vw, 46px); margin-top:10px; }
+  .section-head p{
+    max-width:38ch;
+    color:var(--ink-soft);
+    margin:0;
+  }
+
+  .swatch-strip{
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
+    gap:2px;
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:0 18px 40px -22px rgba(38,37,35,0.35);
+  }
+  .swatch{
+    position:relative;
+    aspect-ratio:3/4;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:16px 14px;
+    color:var(--paper-on-dark);
+    text-decoration:none;
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .swatch::before{
+    content:"";
+    position:absolute; inset:0;
+    background:var(--sw, var(--teal));
+    transition:transform 0.4s cubic-bezier(.2,.8,.2,1);
+    z-index:-1;
+  }
+  .swatch:hover::before, .swatch:focus-visible::before{ transform:scale(1.08); }
+  .swatch .code{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.06em;
+    opacity:0.85;
+  }
+  .swatch .name{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:19px;
+    text-transform:uppercase;
+    line-height:1.05;
+    margin-top:6px;
+  }
+  .swatch .desc{
+    font-size:12.5px;
+    margin-top:8px;
+    opacity:0;
+    max-height:0;
+    transition:opacity 0.25s ease, max-height 0.25s ease;
+  }
+  .swatch:hover .desc, .swatch:focus-visible .desc{
+    opacity:0.92;
+    max-height:80px;
+    margin-bottom:2px;
+  }
+
+  /* ---------- Über uns ---------- */
+  .about{
+    padding:96px 0;
+  }
+  .about-grid{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:60px;
+    align-items:center;
+  }
+  .about-frame{
+    position:relative;
+    background:var(--teal-deep);
+    border-radius:var(--radius);
+    aspect-ratio:4/5;
+    display:flex;
+    align-items:flex-end;
+    padding:26px;
+    color:var(--paper-on-dark);
+    overflow:hidden;
+  }
+  .about-frame::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(201,138,59,0.35), transparent 55%),
+      linear-gradient(160deg, var(--teal-deep), #12302c 80%);
+  }
+  .about-frame .cred{
+    position:relative;
+    font-family:var(--mono);
+    font-size:12.5px;
+    line-height:1.7;
+  }
+  .about-frame .cred strong{
+    display:block;
+    font-family:var(--display);
+    font-size:22px;
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+
+  .about-copy h2{ font-size:clamp(30px,3.4vw,44px); margin-bottom:22px; }
+  .about-copy p{ color:var(--ink-soft); max-width:56ch; }
+  .about-copy p + p{ margin-top:14px; }
+
+  .about-list{
+    list-style:none;
+    padding:0;
+    margin:28px 0 0;
+    display:grid;
+    gap:12px;
+  }
+  .about-list li{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    font-size:15px;
+  }
+  .about-list li::before{
+    content:"";
+    flex:none;
+    width:9px; height:9px;
+    margin-top:6px;
+    background:var(--ochre);
+  }
+
+  /* ---------- Ablauf ---------- */
+  .process{
+    padding:90px 0 100px;
+    background:var(--ink);
+    color:var(--paper);
+  }
+  .process .eyebrow{ color:var(--ochre); }
+  .process .eyebrow::before{ background:var(--ochre); }
+  .process .section-head h2{ color:var(--paper); }
+  .process .section-head p{ color:rgba(243,239,228,0.7); }
+
+  .process-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:2px;
+    background:rgba(243,239,228,0.14);
+  }
+  .step{
+    background:var(--ink);
+    padding:34px 26px 30px;
+  }
+  .step .n{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--ochre);
+  }
+  .step h3{
+    font-size:22px;
+    margin:14px 0 10px;
+    color:var(--paper);
+  }
+  .step p{
+    font-size:14.5px;
+    color:rgba(243,239,228,0.68);
+    margin:0;
+  }
+
+  /* ---------- Referenzen ---------- */
+  .work{
+    padding:96px 0;
+  }
+  .work-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:22px;
+  }
+  .work-card{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    background:var(--paper-alt);
+  }
+  .work-thumb{
+    aspect-ratio:4/3;
+    background:
+      repeating-linear-gradient(135deg, rgba(38,37,35,0.06) 0 14px, transparent 14px 28px),
+      var(--sw2, var(--teal));
+  }
+  .work-body{ padding:20px 22px 24px; }
+  .work-body .tag{
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--teal-deep);
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+  }
+  .work-body h3{
+    font-size:19px;
+    margin:8px 0 6px;
+    text-transform:none;
+    font-weight:700;
+  }
+  .work-body p{
+    font-size:14px;
+    color:var(--ink-soft);
+    margin:0;
+  }
+
+  /* ---------- Testimonial ---------- */
+  .quote{
+    padding:70px 0;
+    background:var(--paper-alt);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .quote blockquote{
+    margin:0;
+    font-family:var(--display);
+    font-weight:700;
+    text-transform:none;
+    font-size:clamp(24px, 3vw, 34px);
+    line-height:1.3;
+    max-width:22ch;
+    color:var(--teal-deep);
+  }
+  .quote cite{
+    display:block;
+    margin-top:20px;
+    font-style:normal;
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- Kontakt ---------- */
+  .contact{
+    padding:100px 0 90px;
+  }
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:56px;
+  }
+  .contact-info h2{ font-size:clamp(30px,3.4vw,44px); }
+  .contact-info p{ color:var(--ink-soft); max-width:42ch; margin:18px 0 30px; }
+
+  .info-block{
+    display:grid;
+    gap:18px;
+    margin-bottom:14px;
+  }
+  .info-block dt{
+    font-family:var(--mono);
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--teal-deep);
+  }
+  .info-block dd{
+    margin:4px 0 0;
+    font-size:15.5px;
+  }
+
+  .form-card{
+    background:var(--paper-alt);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:34px;
+  }
+  .field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    margin-bottom:18px;
+  }
+  .field label{
+    font-size:12.5px;
+    font-family:var(--mono);
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--ink-soft);
+  }
+  .field input, .field select, .field textarea{
+    font-family:var(--body);
+    font-size:15px;
+    padding:12px 14px;
+    border:1.5px solid var(--line);
+    border-radius:var(--radius);
+    background:var(--paper);
+    color:var(--ink);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    border-color:var(--teal);
+    outline:none;
+  }
+  .field textarea{ resize:vertical; min-height:100px; }
+  .checkline{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:6px 0 22px;
+  }
+  .checkline input{ margin-top:3px; }
+  .form-note{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-top:14px;
+  }
+
+  /* ---------- Footer ---------- */
+  .site-footer{
+    background:var(--ink);
+    color:rgba(243,239,228,0.75);
+    padding:50px 0 30px;
+  }
+  .footer-grid{
+    display:grid;
+    grid-template-columns:1.2fr 0.8fr 0.8fr;
+    gap:30px;
+    padding-bottom:30px;
+    border-bottom:1px solid rgba(243,239,228,0.14);
+  }
+  .footer-grid .logo{ color:var(--paper); }
+  .footer-grid p{ font-size:14px; max-width:34ch; margin-top:14px; }
+  .footer-col h4{
+    font-family:var(--mono);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ochre);
+    margin:0 0 14px;
+  }
+  .footer-col ul{ list-style:none; margin:0; padding:0; display:grid; gap:9px; }
+  .footer-col a{ text-decoration:none; font-size:14px; color:inherit; }
+  .footer-col a:hover{ color:var(--paper); }
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    padding-top:22px;
+    font-size:12.5px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px){
+    .hero-grid, .about-grid, .contact-grid{ grid-template-columns:1fr; }
+    .hero-meta{ border-left:none; border-top:1px solid var(--line); padding-left:0; padding-top:24px; }
+    .about-frame{ order:-1; aspect-ratio:16/9; }
+    .swatch-strip{ grid-template-columns:repeat(3,1fr); }
+    .process-grid{ grid-template-columns:repeat(2,1fr); }
+    .work-grid{ grid-template-columns:repeat(2,1fr); }
+    .footer-grid{ grid-template-columns:1fr; }
+  }
+  @media (max-width: 640px){
+    .main-nav{ position:relative; }
+    .main-nav ul, .main-nav .btn-ghost{ display:none; }
+    .nav-toggle{ display:block; }
+    .main-nav.nav-open ul{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      position:absolute;
+      top:56px; right:0;
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:20px 24px;
+      box-shadow:0 18px 40px -20px rgba(38,37,35,0.4);
+      min-width:200px;
+    }
+    .main-nav.nav-open .btn-ghost{
+      display:inline-flex;
+      position:absolute;
+      top:210px; right:0;
+    }
+    .swatch-strip{ grid-template-columns:repeat(2,1fr); }
+    .process-grid{ grid-template-columns:1fr; }
+    .work-grid{ grid-template-columns:1fr; }
+    .hero{ padding:70px 0 50px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="#top" class="logo">Eberth<span>Malermeisterbetrieb</span></a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="#leistungen">Leistungen</a></li>
+        <li><a href="#ueber-uns">Über uns</a></li>
+        <li><a href="#ablauf">Ablauf</a></li>
+        <li><a href="#referenzen">Referenzen</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+      <a href="#kontakt" class="btn btn-ghost">Angebot anfordern</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menü öffnen" aria-expanded="false"></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <svg class="hero-stroke" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M20,340 C120,300 160,80 260,60 C360,40 380,260 480,220 C540,196 560,150 580,90" />
+    </svg>
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Meisterbetrieb seit 1998 · Musterstadt &amp; Umgebung</p>
+        <h1>Farbe mit<br><em>Handschrift.</em></h1>
+        <p class="hero-lede">Innenanstrich, Fassaden, Tapezier- und Lackierarbeiten — geplant, ausgeführt und abgenommen von einem Meisterbetrieb, der seinen Namen auf jede Rechnung schreibt.</p>
+        <div class="hero-cta">
+          <a href="#kontakt" class="btn btn-primary">Kostenlose Vor-Ort-Beratung</a>
+          <a href="#leistungen" class="btn btn-ghost">Leistungen ansehen</a>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <div class="stat"><span class="num">26</span><span class="label">Jahre im Handwerk</span></div>
+        <div class="stat"><span class="num">340+</span><span class="label">Projekte übergeben</span></div>
+        <div class="stat"><span class="num">5</span><span class="label">Gesellen &amp; Azubis im Team</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEISTUNGEN / FARBFÄCHER -->
+  <section class="swatches" id="leistungen">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Leistungen</p>
+          <h2>Der Farbfächer.</h2>
+        </div>
+        <p>Sechs Gewerke, ein Ansprechpartner. Jede Leistung wird von uns selbst ausgeführt — keine Subunternehmer.</p>
+      </div>
+      <div class="swatch-strip">
+        <a class="swatch" style="--sw:#2c5f5a" href="#kontakt">
+          <span class="code">RAL 6000-M</span>
+          <span class="name">Innenanstrich</span>
+          <span class="desc">Wände, Decken, Türzargen — sauber abgeklebt, staubarm geschliffen.</span>
+        </a>
+        <a class="swatch" style="--sw:#a64b3f" href="#kontakt">
+          <span class="code">RAL 3009-M</span>
+          <span class="name">Fassade</span>
+          <span class="desc">Witterungsbeständige Systeme inkl. Untergrundprüfung und Gerüststellung.</span>
+        </a>
+        <a class="swatch" style="--sw:#c98a3b" href="#kontakt">
+          <span class="code">RAL 1024-M</span>
+          <span class="name">Tapezieren</span>
+          <span class="desc">Vlies, Raufaser, Design­tapeten — inklusive Untergrundausgleich.</span>
+        </a>
+        <a class="swatch" style="--sw:#3d4f6b" href="#kontakt">
+          <span class="code">RAL 5011-M</span>
+          <span class="name">Lackierung</span>
+          <span class="desc">Türen, Treppen, Heizkörper und Fensterrahmen in Werkstattqualität.</span>
+        </a>
+        <a class="swatch" style="--sw:#6b7a4a" href="#kontakt">
+          <span class="code">RAL 6013-M</span>
+          <span class="name">Wärmedämmung</span>
+          <span class="desc">WDVS-Montage nach aktueller EnEV, inklusive Fördermittel-Beratung.</span>
+        </a>
+        <a class="swatch" style="--sw:#5a4632" href="#kontakt">
+          <span class="code">RAL 8007-M</span>
+          <span class="name">Bodenbeschichtung</span>
+          <span class="desc">Keller, Garagen und Gewerbeflächen — fugenlos und belastbar.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÜBER UNS -->
+  <section class="about" id="ueber-uns">
+    <div class="wrap about-grid">
+      <div class="about-frame">
+        <div class="cred">
+          <strong>Michael Eberth</strong>
+          Malermeister · Handwerkskammer-Eintrag Nr. [XXXXX]<br>
+          Mitgliedsbetrieb der Innung des Maler- und Lackiererhandwerks
+        </div>
+      </div>
+      <div class="about-copy">
+        <p class="eyebrow">Über uns</p>
+        <h2>Ein Meisterbrief ist ein Versprechen.</h2>
+        <p>Michael Eberth hat den Betrieb 1998 mit zwei Gesellen gegründet. Heute arbeiten fünf festangestellte Fachkräfte unter seiner Leitung — jede Baustelle wird von ihm persönlich abgenommen, nicht nur kalkuliert.</p>
+        <p>Wir rechnen offen ab, halten Termine ein und räumen jede Baustelle besenrein. Was wir zusagen, tragen wir auch im Angebot fest — ohne Nachträge aus dem Nichts.</p>
+        <ul class="about-list">
+          <li>Festpreis-Angebote statt Stundenzettel-Überraschungen</li>
+          <li>Eigenes Team, keine Subunternehmer auf der Baustelle</li>
+          <li>Materialberatung inklusive Farbmuster vor Ort</li>
+          <li>Gewährleistung schriftlich im Abnahmeprotokoll</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABLAUF -->
+  <section class="process" id="ablauf">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Ablauf</p>
+          <h2>Von der Anfrage zur Abnahme.</h2>
+        </div>
+        <p>Vier Schritte, immer in dieser Reihenfolge — damit Sie jederzeit wissen, woran Sie sind.</p>
+      </div>
+      <div class="process-grid">
+        <div class="step">
+          <span class="n">01</span>
+          <h3>Beratung</h3>
+          <p>Vor-Ort-Termin, Aufmaß und Farbberatung — unverbindlich und kostenfrei.</p>
+        </div>
+        <div class="step">
+          <span class="n">02</span>
+          <h3>Angebot</h3>
+          <p>Schriftlicher Festpreis innerhalb von 3 Werktagen, inklusive Materialauswahl.</p>
+        </div>
+        <div class="step">
+          <span class="n">03</span>
+          <h3>Ausführung</h3>
+          <p>Verbindlicher Terminplan, tägliche Baustellensauberkeit, ein fester Ansprechpartner.</p>
+        </div>
+        <div class="step">
+          <span class="n">04</span>
+          <h3>Abnahme</h3>
+          <p>Gemeinsamer Rundgang, Übergabeprotokoll und schriftliche Gewährleistung.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFERENZEN -->
+  <section class="work" id="referenzen">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Referenzen</p>
+          <h2>Zuletzt übergeben.</h2>
+        </div>
+        <p>Eine kleine Auswahl — Bildmaterial folgt nach Freigabe durch die jeweiligen Auftraggeber.</p>
+      </div>
+      <div class="work-grid">
+        <div class="work-card">
+          <div class="work-thumb" style="--sw2:#2c5f5a"></div>
+          <div class="work-body">
+            <span class="tag">Fassade · Musterstadt</span>
+            <h3>Mehrfamilienhaus, Ahornweg</h3>
+            <p>Vollflächige WDVS-Sanierung, 480 m², Fertigstellung in 3 Wochen.</p>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-thumb" style="--sw2:#c98a3b"></div>
+          <div class="work-body">
+            <span class="tag">Innenanstrich · Musterstadt</span>
+            <h3>Praxisräume Dr. Vogt</h3>
+            <p>Anstrich im laufenden Betrieb, Arbeiten ausschließlich abends und samstags.</p>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-thumb" style="--sw2:#a64b3f"></div>
+          <div class="work-body">
+            <span class="tag">Tapezieren · Musterstadt</span>
+            <h3>Altbauwohnung, Bahnhofstraße</h3>
+            <p>Untergrundsanierung und Vliestapete in vier Zimmern eines Altbaus.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZITAT -->
+  <section class="quote">
+    <div class="wrap">
+      <blockquote>„Termin gehalten, Preis gehalten, Baustelle sauber übergeben."</blockquote>
+      <cite>— Familie Brandt, Fassadensanierung Ahornweg</cite>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section class="contact" id="kontakt">
+    <div class="wrap contact-grid">
+      <div class="contact-info">
+        <p class="eyebrow">Kontakt</p>
+        <h2>Reden wir über Ihre Wände.</h2>
+        <p>Rufen Sie an oder schreiben Sie uns kurz — wir melden uns innerhalb eines Werktags mit einem Terminvorschlag für die Vor-Ort-Beratung.</p>
+        <dl class="info-block">
+          <div>
+            <dt>Telefon</dt>
+            <dd><a href="tel:+49XXXXXXXXXX">[Telefonnummer eintragen]</a></dd>
+          </div>
+          <div>
+            <dt>E-Mail</dt>
+            <dd><a href="mailto:info@malerbetrieb-eberth.de">info@malerbetrieb-eberth.de</a></dd>
+          </div>
+          <div>
+            <dt>Adresse</dt>
+            <dd>[Straße Nr.], [PLZ] Musterstadt</dd>
+          </div>
+          <div>
+            <dt>Erreichbarkeit</dt>
+            <dd>Mo–Fr 7:00–17:00 Uhr, Baustellenbesichtigung nach Vereinbarung</dd>
+          </div>
+        </dl>
+      </div>
+      <form class="form-card" onsubmit="return false;">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Vor- und Nachname" required>
+        </div>
+        <div class="field">
+          <label for="kontaktweg">Telefon oder E-Mail</label>
+          <input id="kontaktweg" name="kontaktweg" type="text" placeholder="Wie erreichen wir Sie am besten?" required>
+        </div>
+        <div class="field">
+          <label for="leistung">Gewünschte Leistung</label>
+          <select id="leistung" name="leistung">
+            <option>Innenanstrich</option>
+            <option>Fassade</option>
+            <option>Tapezieren</option>
+            <option>Lackierung</option>
+            <option>Wärmedämmung</option>
+            <option>Bodenbeschichtung</option>
+            <option>Weiß ich noch nicht</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="nachricht">Nachricht</label>
+          <textarea id="nachricht" name="nachricht" placeholder="Kurz beschreiben, worum es geht — z. B. Raumgröße oder gewünschter Zeitraum."></textarea>
+        </div>
+        <label class="checkline">
+          <input type="checkbox" required>
+          Ich habe die Datenschutzhinweise gelesen und bin mit der Verarbeitung meiner Angaben einverstanden.
+        </label>
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Anfrage senden</button>
+        <p class="form-note">Demo-Formular — hier noch keine echte Übertragung hinterlegt.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="#top" class="logo">Eberth</a>
+        <p>Malermeisterbetrieb Eberth · Musterstadt. Innenanstrich, Fassaden, Tapezier- und Lackierarbeiten aus einer Hand.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#leistungen">Leistungen</a></li>
+          <li><a href="#ueber-uns">Über uns</a></li>
+          <li><a href="#referenzen">Referenzen</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Rechtliches</h4>
+        <ul>
+          <li><a href="#">Impressum</a></li>
+          <li><a href="#">Datenschutz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Malermeisterbetrieb Eberth</span>
+      <span>Website-Demo — Platzhalterinhalte, keine echten Kundendaten</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.main-nav');
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('nav-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+</script>
+
+</body>
+</html>
